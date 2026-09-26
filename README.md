@@ -29,6 +29,9 @@ more advanced database concepts.
 I learn each concept by writing SQL queries and solving
 small practical exercises rather than only studying theory.
 
+# Practice on different datasets
+-- Popular Movies and Shows (Data Cleaning and Exploratory Data Analysis)
+
 ## Tools
 
 - SQL Server / MySQL
