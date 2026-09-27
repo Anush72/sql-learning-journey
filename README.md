@@ -30,7 +30,15 @@ I learn each concept by writing SQL queries and solving
 small practical exercises rather than only studying theory.
 
 # Practice on different datasets
--- Popular Movies and Shows (Data Cleaning and Exploratory Data Analysis)
+## Popular Movies and Shows (Data Cleaning and Exploratory Data Analysis)
+-- Data Cleaning
+a) Looking at Null but does not found any null in datasets.
+b) Looking at duplicates and found duplicates and remove.
+c) Looking at different columns and found that two columns does not give any information. So, I remove that.
+d) Looks good so goes to Exploratory Data Analysis
+-- Exploratory Data Analysis
+a) There are total 70 movies that is recent release.
+b) There are 59 movies that release in 2026.
 
 ## Tools
 
