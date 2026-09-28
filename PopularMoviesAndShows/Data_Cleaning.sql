@@ -49,3 +49,7 @@ select *
 from streamingtrends
 where title is null;
 
+-- delete the movies before 2025
+delete 
+from streamingtrends
+where release_year != 2025 and release_year != 2026;
