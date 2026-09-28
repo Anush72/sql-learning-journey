@@ -30,7 +30,7 @@ I learn each concept by writing SQL queries and solving
 small practical exercises rather than only studying theory.
 
 # Practice on different datasets
-## Popular Movies and Shows (Data Cleaning and Exploratory Data Analysis)
+#Popular Movies and Shows (Data Cleaning and Exploratory Data Analysis)
 -- Data Cleaning
 a) Looking at Null but does not found any null in datasets.
 b) Looking at duplicates and found duplicates and remove.
@@ -39,6 +39,12 @@ d) Looks good so goes to Exploratory Data Analysis
 -- Exploratory Data Analysis
 a) There are total 70 movies that is recent release.
 b) There are 59 movies that release in 2026.
+c) There are 59 movies and 11 movies release in 2026 and 2025 respectively.
+d) English is most dominant among other movies.
+e) By rank popularity, Spider-Man: Brand New Day Rank Top whereas The Dollmaker at last.
+f) By rank vote average, Avatar Aang: The Last Airbender Top whereas The Last Sunrise at last.
+g)There are 20 total movies with science fiction.
+h)Th total vote count is 8447.
 
 ## Tools
 
