@@ -135,3 +135,60 @@ WHERE hire_date >= '2010-01-01'
 ORDER BY salary DESC;
 
 
+-- Chapter 4 Understanding Data Types
+CREATE TABLE eagle_watch (
+	observation_date date,
+	eagles_seen integer,
+	notes text
+);
+
+-- charactes data types
+-- char(n) - fixed length (fixed space allocated), 
+-- varchar(n) -- fixed length (variable space allocated based on charcter you put)
+-- text -- unlimited length
+
+CREATE TABLE char_data_types (
+	char_column char(10),
+	varchar_column varchar(10),
+	text_colum text
+);
+
+INSERT INTO char_data_types
+VALUES
+	('abc','abc','abc'),
+	('defghi','defghi','defghi');
+
+COPY char_data_types TO 'd:\sql-learning-journey\PostgreSQL\typestext.txt'
+WITH (FORMAT CSV,HEADER,DELIMITER '|');
+
+-- numeric data types 
+-- small int, integer, big init
+-- auto increment number smallserial, serial and bigserial
+CREATE TABLE people (
+	id serial,
+	person_name varchar(100)
+);
+
+-- Auto Incrementing with IDENTITY
+-- CREATE TABLE people (
+-- 	id integer GENERATED ALWAYS AS IDENTITY,
+-- 	person_name varchar(100)
+-- );
+
+-- Decimal Number
+-- numeric, decimal variable fixed point
+-- real floating point 6 decimal digits precision
+-- double precision floating point 15 decimal digits precision
+CREATE TABLE number_data_types (
+	numeric_column numeric(20,5),
+	real_column real,
+	double_column double precision
+);
+
+ INSERT INTO number_data_types
+VALUES
+    (.7, .7, .7),
+    (2.13579, 2.13579, 2.13579),
+    (2.1357987654, 2.1357987654, 2.1357987654);
+SELECT * FROM number_data_types;
+
