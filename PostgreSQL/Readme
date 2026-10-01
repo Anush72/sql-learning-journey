@@ -1,0 +1,5 @@
+In this Folder, I am posting the things about Postgre SQL practice from Book Practical SQL.
+Lessons I have learned
+a) How we can make Table and Insert Values in Database.
+b) DataTypes 
+c) Select Statement, Where, Order by, operator(=,<,>), OR and AND operator, LIKE (Case Sensitive),ILIKE ( Not Case Sensitive).
