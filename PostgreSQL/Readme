@@ -3,3 +3,13 @@ Lessons I have learned
 a) How we can make Table and Insert Values in Database.
 b) DataTypes 
 c) Select Statement, Where, Order by, operator(=,<,>), OR and AND operator, LIKE (Case Sensitive),ILIKE ( Not Case Sensitive).
+d) Data Types
+  i) Text, Numeric, and Date Time
+  ii) Text - char(n), varchar(n), and Text
+      char(n) - fixed space allocated by n and fixed character should be put based on n.
+      varchar(n) - variable space allocated by number of character you put and the length is fixed by n.
+      text - unlimited charcter can be put
+  iii) Numeric - Integers and Decimal
+       Integers - smallint, integers,bigint
+       Auto Increment Integers - smallserial,serial,bigserial
+  iv) Decimal - Fixed and Floating
