@@ -13,3 +13,12 @@ d) Data Types
        Integers - smallint, integers,bigint
        Auto Increment Integers - smallserial,serial,bigserial
   iv) Decimal - Fixed and Floating
+  v) Dates and Time - TimeStamp (Date and Time), dates - (date only), time (time only) and interval (days)
+  v) JSON and JSON B 
+      JSON - Put the data on keys and pairs. Example
+        {
+          'Name' : 'Anush',
+          'Address' : 'Melbourne'
+        }
+      JSONB put the above value in binary format which helps sorting the data fastly.
+  vi) Casting - converting one type of data types into another using CAST() or :: (name :: text) 
