@@ -22,3 +22,8 @@ d) Data Types
         }
       JSONB put the above value in binary format which helps sorting the data fastly.
   vi) Casting - converting one type of data types into another using CAST() or :: (name :: text) 
+e) Importing and Exporting
+  i) Creating table and Copying the data with the help of COPY table name FROM path director with (FORMAT CSV, DELIMITER)
+  ii) Copying data with sub coulmns only
+  iii) Exporting Table with Help of COPY table name to path director with (FORMAT CSV, DELIMITER)
+  iv) Only Exporting sub columns
