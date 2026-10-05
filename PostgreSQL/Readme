@@ -27,3 +27,7 @@ e) Importing and Exporting
   ii) Copying data with sub coulmns only
   iii) Exporting Table with Help of COPY table name to path director with (FORMAT CSV, DELIMITER)
   iv) Only Exporting sub columns
+f) Basic Math and Statistics in SQL
+  We can perform basics maths like addition, subtraction, multiplication, 
+  and division. We can also do modulus, exponent, sqaure root and cube root.
+  We can perform this column of numeric data types.
