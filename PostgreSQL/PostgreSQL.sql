@@ -359,3 +359,21 @@ COPY
 	LIMIT 20)
 TO 'D:\sql-learning-journey\PostgreSQL\us_counties_mostbirth_export.csv'
 WITH (FORMAT CSV, HEADER);
+
+-- Basic Maths and Statistics with SQL
+
+-- operator (+, addition), (-,substraction), (*,multiplication)
+-- (/, division), (%, modulo), (^,Exponentation),(|/, Square Root), (||/, Cube Root)
+-- (!,factorial)
+
+
+-- Adding subtracting and multiplying
+SELECT 2+ 2;
+SELECT 9-1;
+SELECT 3*4;
+
+-- Performing Division and Module
+SELECT 11/6;
+SELECT 11 % 6;
+SELECT 11.0/6;
+SELECT CAST(11 AS NUMERIC(3,1))/6;
