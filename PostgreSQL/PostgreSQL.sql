@@ -377,3 +377,56 @@ SELECT 11/6;
 SELECT 11 % 6;
 SELECT 11.0/6;
 SELECT CAST(11 AS NUMERIC(3,1))/6;
+
+-- Using Exponents, Roots and Factorials
+SELECT 3 ^4;
+
+SELECT |/10;
+
+SELECT sqrt(10);
+
+SELECT ||/10;
+
+SELECT factorial(4);
+
+--- Order of Operations
+
+-- 1. Exponents and roots
+-- 2. Multiplication, divison and modulo
+-- 3. Addition and subtraction
+
+SELECT 7+8*9;
+SELECT (7+8)*9;
+
+-- Second example using exponents
+SELECT 3 ^ 3-1;
+SELECT 3 ^ (3-1);
+
+
+-- Adding and Subtracting Columns
+SELECT county_name AS county,
+state_name AS state,
+births_2019 AS births,
+deaths_2019 AS deaths,
+births_2019 - deaths_2019 AS natural_increase
+FROM us_counties_pop_est_2019
+ORDER BY state_name, county_name;
+
+
+SELECT county_name AS county,
+state_name AS state,
+pop_est_2019 AS pop,
+pop_est_2018+births_2019-deaths_2019+
+international_migr_2019+ domestic_migr_2019+ residual_2019 AS components_total,
+pop_est_2019 - (pop_est_2018 + births_2019 - deaths_2019 +
+international_migr_2019 + domestic_migr_2019 +
+residual_2019) AS difference
+FROM us_counties_pop_est_2019
+ORDER BY difference DESC;
+
+-- Finding Percentages of the Whole
+SELECT county_name as county,
+state_name AS state,
+area_water::numeric / (area_land + area_water) * 100 as pct_water
+FROM us_counties_pop_est_2019
+ORDER BY pct_water DESC;
