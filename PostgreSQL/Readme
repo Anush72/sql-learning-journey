@@ -31,3 +31,17 @@ f) Basic Math and Statistics in SQL
   We can perform basics maths like addition, subtraction, multiplication, 
   and division. We can also do modulus, exponent, sqaure root and cube root.
   We can perform this column of numeric data types.
+  Order of Mathemathics
+  - Exponent
+  - Division
+  - Multiplication
+  - Addition 
+  -Subtraction
+  We just need to know SQL follow BODMAS Rule.
+  B for Brackets
+  O - OF ( Not Used in SQL)
+  D - Division
+  M - Multiplication
+  A - Addition
+  S - Subtraction
+  We can use this mathematical operations in numeric column of SQL.
