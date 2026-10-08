@@ -430,3 +430,106 @@ state_name AS state,
 area_water::numeric / (area_land + area_water) * 100 as pct_water
 FROM us_counties_pop_est_2019
 ORDER BY pct_water DESC;
+
+-- Tracking percentage Change
+CREATE TABLE percent_change (
+	department text,
+	spend_2019 numeric(10,2),
+	spend_2022 numeric(10,2)
+);
+
+-- Inserting the values in percentage change
+INSERT INTO percent_change
+VALUES
+	('Assessor',178556,179500),
+	('Building',250000,289000),
+	('Clerk',451980,650000),
+	('Library',87777,9001),
+	('Parks',250000,223000),
+	('Water',199000,195000)
+;
+
+SELECT department,
+spend_2019,
+spend_2022,
+round((spend_2022-spend_2019)/spend_2019*100,1) AS pct_change
+FROM percent_change;
+
+
+-- Using Aggregate Functions for Averages and Sums
+SELECT sum(pop_est_2019) AS county_sum,
+	round(avg(pop_est_2019),0) AS county_average
+FROM us_counties_pop_est_2019;
+
+-- Median
+-- We use pecentile_cont function to calculate median, q1 and q3
+CREATE TABLE percentile_test (
+numbers integer
+);
+
+INSERT INTO percentile_test (numbers) VALUES
+ (1), (2), (3),(4),(5),(6);
+
+SELECT 
+	percentile_cont(.5)
+	WITHIN GROUP (ORDER BY numbers),
+	percentile_disc(.5)
+	WITHIN GROUP (ORDER BY numbers)
+FROM percentile_test;
+
+
+-- Finding Mean and Percentiles with census data
+SELECT sum(pop_est_2019) AS county_sum,
+	round(avg(pop_est_2019),0) AS county_average,
+	percentile_cont(.5)
+	WITHIN GROUP (ORDER BY pop_est_2019) AS county_median
+	FROM us_counties_pop_est_2019;
+
+-- finding other quantiles with percentile functions
+SELECT percentile_cont(ARRAY[.25,.5,.75])
+ WITHIN GROUP (ORDER BY pop_est_2019) as quartiles
+FROM us_counties_pop_est_2019;
+
+-- Using Unnest
+SELECT unnest(percentile_cont(ARRAY[.25,.5,.75])
+ WITHIN GROUP (ORDER BY pop_est_2019))as quartiles
+FROM us_counties_pop_est_2019;
+
+-- finding the mode
+SELECT mode() WITHIN GROUP(ORDER BY births_2019)
+FROM us_counties_pop_est_2019;
+
+
+-- Area Of Circle
+SELECT CAST(22/7*(5 ^2) as numeric(10,2));
+
+-- ratios of births to deaths
+select county_name,
+state_name,
+births_2019 AS births,
+deaths_2019 AS deaths,
+births_2019 :: numeric / deaths_2019 AS birth_death_ratio
+FROM us_counties_pop_est_2019
+WHERE state_name = 'New York'
+ORDER BY birth_death_ratio DESC;
+
+-- median for Californa and New York
+SELECT percentile_cont(0.5)
+	WITHIN GROUP (ORDER BY pop_est_2019) as median
+FROM us_counties_pop_est_2019
+WHERE state_name = 'California';
+
+SELECT percentile_cont(0.5)
+	WITHIN GROUP (ORDER BY pop_est_2019) as median
+FROM us_counties_pop_est_2019
+WHERE state_name = 'New York';
+
+-- Both 
+SELECT state_name,
+	percentile_cont(0.5)
+	WITHIN GROUP (ORDER BY pop_est_2019) as median
+FROM us_counties_pop_est_2019
+WHERE state_name IN  ('New York','California')
+GROUP by state_name;
+
+
