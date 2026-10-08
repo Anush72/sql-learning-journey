@@ -45,3 +45,11 @@ f) Basic Math and Statistics in SQL
   A - Addition
   S - Subtraction
   We can use this mathematical operations in numeric column of SQL.
+  We can use mean, median and mode in SQL.
+  for mean - we have avg ()
+  for mode - we have mode ()
+  But for median, 1st Quartile and 3rd Quartile, we have percentile_cont
+  syntax
+  percentile_cont(0.5) - for median
+  with in (order by column)
+  LikeWise 0.25 - for 1st Quartile, and 0.75 for 3rd Quartile
