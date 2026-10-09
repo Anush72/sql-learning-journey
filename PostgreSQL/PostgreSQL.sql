@@ -532,4 +532,174 @@ FROM us_counties_pop_est_2019
 WHERE state_name IN  ('New York','California')
 GROUP by state_name;
 
+-- Joining tales in a relational database
 
+CREATE TABLE departments (
+    dept_id integer,
+    dept text,
+    city text,
+   CONSTRAINT dept_key PRIMARY KEY (dept_id),
+   CONSTRAINT dept_city_unique UNIQUE (dept, city)
+);
+
+CREATE TABLE employees (
+    emp_id integer,
+    first_name text,
+    last_name text,
+    salary numeric(10,2),
+   dept_id integer REFERENCES departments (dept_id),
+   CONSTRAINT emp_key PRIMARY KEY (emp_id)
+);
+
+INSERT INTO departments
+VALUES
+    (1, 'Tax', 'Atlanta'),
+    (2, 'IT', 'Boston');
+
+INSERT INTO employees
+VALUES
+    (1, 'Julia', 'Reyes', 115300, 1),
+    (2, 'Janet', 'King', 98000, 1),
+    (3, 'Arthur', 'Pappas', 72700, 2),
+    (4, 'Michael', 'Taylor', 89500, 2);
+
+
+SELECT * 
+FROM departments;
+
+SELECT * 
+FROM employees;
+
+
+-- Quering Multiple Tables Using JOIN
+
+SELECT * 
+FROM employees JOIN departments
+ON employees.dept_id = departments.dept_id
+ORDER BY employees.dept_id;
+
+-- Types of Join
+
+-- Join - return rows from both table where mathcing values are found
+-- Left Join - return every row from left table and show mathcing value of right table
+-- Right Join - return every row from right table and show matching value of left table
+-- FULL outer Join - returns every value from both table and joins the value where the value matched
+-- CROSS Join - returns every possible combination from both tables
+
+CREATE TABLE district_2020 (
+  id integer CONSTRAINT id_key_2020 PRIMARY KEY,
+    school_2020 text
+);
+
+CREATE TABLE district_2035 (
+   id integer CONSTRAINT id_key_2035 PRIMARY KEY,
+    school_2035 text
+);
+
+INSERT INTO district_2020 VALUES
+    (1, 'Oak Street School'),
+    (2, 'Roosevelt High School'),
+    (5, 'Dover Middle School'),
+    (6, 'Webutuck High School');
+
+INSERT INTO district_2035 VALUES
+    (1, 'Oak Street School'),
+    (2, 'Roosevelt High School'),
+    (3, 'Morrison Elementary'),
+    (4, 'Chase Magnet Academy'),
+    (6, 'Webutuck High School');
+
+-- Join
+SELECT * 
+FROM district_2020 JOIN district_2035
+ON district_2020.id = district_2035.id
+ORDER BY district_2020.id;
+
+
+-- JOIN with USING
+SELECT * 
+FROM district_2020 JOIN district_2035
+USING(id)
+ORDER BY district_2020.id;
+
+-- Left Join
+SELECT * 
+FROM district_2020 LEFT JOIN district_2035
+ON district_2020.id = district_2035.id
+ORDER BY district_2020.id;
+
+-- Right Join
+SELECT * 
+FROM district_2020 RIGHT JOIN district_2035
+ON district_2020.id = district_2035.id
+ORDER BY district_2020.id;
+
+
+-- Full Outer Join
+SELECT * 
+FROM district_2020 FULL OUTER JOIN district_2035
+ON district_2020.id = district_2035.id
+ORDER BY district_2020.id;
+
+-- CROSS JOIN
+SELECT *
+FROM district_2020 CROSS JOIN district_2035
+ORDER BY district_2020.id, district_2035.id;
+
+
+-- Finding Nulls using Join over the time
+SELECT * 
+FROM district_2020 LEFT JOIN district_2035
+ON district_2020.id = district_2035.id
+WHERE district_2035.id IS NULL;
+
+
+-- One to One Relationship - One table of  row match with only one row of other table
+-- Example: State Population of Australia and State Income of Australia - We can have only 7 row in total if we join
+-- One to Many Relationship - One row of table match with many row of other table
+-- Example: One state of Australia has many cities and suburbs.
+-- Many to Many Relation - one table can relate to multiple items in another table and vice versa
+-- Example: one state can many laws and one law can implement in many state
+
+-- selecting specific columns
+SELECT district_2020.id,school_2020,school_2035
+FROM district_2020 LEFT JOIN district_2035
+ON district_2020.id = district_2035.id
+
+-- Simpliyfying JOIN syntax with Table Aliases
+SELECT d20.id,d20.school_2020,d35.school_2035
+FROM district_2020 AS d20 LEFT JOIN district_2035 AS d35
+ON d20.id = d35.id
+ORDER BY d20.id;
+
+-- Joining Multiple Table
+CREATE TABLE district_2020_enrollment (
+    id integer,
+    enrollment integer
+);
+
+CREATE TABLE district_2020_grades (
+    id integer,
+    grades varchar(10)
+);
+
+INSERT INTO district_2020_enrollment
+VALUES
+    (1, 360),
+    (2, 1001),
+    (5, 450),
+    (6, 927);
+
+INSERT INTO district_2020_grades
+VALUES
+    (1, 'K-3'),
+    (2, '9-12'),
+    (5, '6-8'),
+    (6, '9-12');
+
+SELECT d20.id,d20.school_2020,en.enrollment,gr.grades
+FROM district_2020 AS d20 JOIN district_2020_enrollment AS en
+on d20.id = en.id
+JOIN district_2020_grades AS gr
+on d20.id = gr.id
+ORDER BY d20.id;
