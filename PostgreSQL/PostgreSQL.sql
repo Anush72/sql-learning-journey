@@ -703,3 +703,70 @@ on d20.id = en.id
 JOIN district_2020_grades AS gr
 on d20.id = gr.id
 ORDER BY d20.id;
+
+-- creating table us_counties_pop_est_2010
+
+CREATE TABLE us_counties_pop_est_2010 (
+	state_fips text,
+	county_fips text,
+	region smallint,
+	state_name text,
+	county_name text,
+	estimates_base_2010 integer,
+	CONSTRAINT counties_2010_key PRIMARY KEY (state_fips,county_fips)
+);
+
+
+COPY us_counties_pop_est_2010 
+FROM 'D:\sql-learning-journey\PostgreSQL\us_counties_pop_est_2010.csv'
+WITH (FORMAT CSV, HEADER);
+
+
+SELECT c2019.county_name,
+c2019.state_name,c2019.pop_est_2019 as pop_2019,
+c2010.estimates_base_2010 as pop_2010,
+c2019.pop_est_2019 - c2010.estimates_base_2010 as raw_change,
+round((c2019.pop_est_2019::numeric - c2010.estimates_base_2010)/c2010.estimates_base_2010 *100,1)AS pct_change
+FROM us_counties_pop_est_2019 as c2019
+JOIN us_counties_pop_est_2010 as c2010
+on c2019.state_fips = c2010.state_fips
+	AND c2019.county_fips = c2010.county_fips
+ORDER BY pct_change DESC;
+
+
+-- GREATEST PERCENTAGE LOSS IN POPULATION
+SELECT c2019.county_name,
+c2019.state_name,c2019.pop_est_2019 as pop_2019,
+c2010.estimates_base_2010 as pop_2010,
+c2019.pop_est_2019 - c2010.estimates_base_2010 as raw_change,
+round((c2019.pop_est_2019::numeric - c2010.estimates_base_2010)/c2010.estimates_base_2010 *100,1)AS pct_change
+FROM us_counties_pop_est_2019 as c2019
+JOIN us_counties_pop_est_2010 as c2010
+on c2019.state_fips = c2010.state_fips
+	AND c2019.county_fips = c2010.county_fips
+ORDER BY pct_change ASC;
+
+
+-- UNION To combine 2010 and 2019
+
+SELECT county_name, state_name,
+pop_est_2019,'2019' AS year_of_pop
+FROM
+us_counties_pop_est_2019
+UNION ALL
+SELECT county_name, state_name,
+estimates_base_2010,'2010' AS year_of_pop
+FROM
+us_counties_pop_est_2010
+ORDER BY county_name;
+
+
+-- Mean of Percent change in estimated Population between 2010 and 2019
+SELECT PERCENTILE_CONT(.5)
+WITHIN GROUP (ORDER BY ROUND((c2019.pop_est_2019::numeric - c2010.estimates_base_2010)/
+c2010.estimates_base_2010*100,1)) AS percentile_50th
+FROM us_counties_pop_est_2019 AS c2019
+JOIN us_counties_pop_est_2010 AS c2010
+ON c2019.state_fips = c2010.state_fips
+    AND c2019.county_fips = c2010.county_fips;
+
