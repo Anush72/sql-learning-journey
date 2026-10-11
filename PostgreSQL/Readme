@@ -67,3 +67,9 @@ g) Joining Table
     Example: One state of Australia has many cities and suburbs.
     Many to Many Relation - one table can relate to multiple items in another table and vice versa
     Example: one state can many laws and one law can implement in many state
+  h) Guidelines for Naming Identifiers
+    a) Using Snake case like country_name
+    b) Make name easy to understand and avoid cryptic abbrevations
+    c) For table names, use purals\
+    d) Mind the length
+    e) When making copies of tables, use names that will help you manage them later
