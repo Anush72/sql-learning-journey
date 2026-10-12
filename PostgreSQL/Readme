@@ -73,3 +73,20 @@ g) Joining Table
     c) For table names, use purals\
     d) Mind the length
     e) When making copies of tables, use names that will help you manage them later
+  i) Contraints
+    we can use different constraints to make rules for columns like primary key, 
+    foregin key, check, unique value and not null values.
+    Constraints helps us to design the table effectively when making primary key and 
+    foregin key.
+    There are two types of Primary Key Natural Key and Surrogate Keys
+    a) Natural Key - Using existing column of table which meet the condition for primary key.
+      For example - Passport ID for identification can be used primary key for immigrants.
+    b) Surrogate Key - Using artifical values for column which is unique and not have any meaning.
+      For Example - Using ProductID for product.
+    c) Composite Primary Key - Using two columns of table to make primary key.
+      For example - Passport ID and Country can be as composite key
+      Foreign Key - helps to make relationship between two tables
+      one primary key of table used to join another table.
+      We cannot put the row in second table when we didnot insert the primary key in first table.
+      We cannot delete the row in first table if we used primary key in second table.
+      For deleting at same time we can use Cascade.
