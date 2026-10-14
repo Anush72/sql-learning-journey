@@ -879,3 +879,102 @@ CREATE TABLE registrations (
 );
 
 
+-- The CHECK Constraint
+-- Ensure that data put their meet the condition like primary key
+-- What value to be put and so on.
+CREATE TABLE check_constraint_example (
+	user_id bigint GENERATED ALWAYS AS IDENTITY,
+	user_role text,
+	salary numeric(10,2),
+	CONSTRAINT user_id_key PRIMARY KEY (user_id),
+	CONSTRAINT check_role_in_list CHECK(user_role IN ('Admin','Staff')),
+	CONSTRAINT check_salary_not_below_zero CHECK (salary >= 0)
+);
+
+
+-- The UNIQUE Constraint
+-- Ensure that the value inside the constraints should be unique
+
+CREATE TABLE unique_constraint_example (
+contact_id bigint GENERATED ALWAYS AS IDENTITY,
+first_name text,
+last_name text,
+email text,
+CONSTRAINT contact_id_key PRIMARY KEY (contact_id),
+CONSTRAINT email_unique UNIQUE(email)
+);
+
+INSERT INTO unique_constraint_example (first_name, last_name, email)
+VALUES ('Samantha', 'Lee', 'slee@example.org');
+
+INSERT INTO unique_constraint_example (first_name, last_name, email)
+VALUES ('Betty', 'Diaz', 'bdiaz@example.org');
+
+INSERT INTO unique_constraint_example (first_name, last_name, email)
+VALUES ('Sasha', 'Lee', 'slee@example.org');
+
+
+-- Not Null Constraints
+
+-- Ensure that the row value shouldnot be null
+CREATE TABLE not_null_example (
+    student_id bigint GENERATED ALWAYS AS IDENTITY,
+    first_name text NOT NULL,
+    last_name text NOT NULL,
+    CONSTRAINT student_id_key PRIMARY KEY (student_id)
+);
+
+
+-- Remove or Add them Later
+ALTER TABLE not_null_example DROP CONSTRAINT student_id_key;
+ALTER TABLE not_null_example ADD CONSTRAINT student_id_key PRIMARY KEY (student_id);
+ALTER TABLE not_null_example ALTER COLUMN first_name DROP NOT NULL;
+ALTER TABLE not_null_example ALTER COLUMN first_name SET NOT NULL;
+
+-- Speeding Up Quries with Indexes
+CREATE TABLE new_york_addresses (
+    longitude numeric(9,6),
+    latitude numeric(9,6),
+    street_number text,
+    street text,
+    unit text,
+    postcode text,
+    id integer CONSTRAINT new_york_key PRIMARY KEY
+)
+
+COPY new_york_addresses
+FROM 'D:\sql-learning-journey\PostgreSQL\city_of_new_york.csv'
+WITH (FORMAT CSV,HEADER);
+
+EXPLAIN ANALYZE SELECT * FROM new_york_addresses
+WHERE street = 'BROADWAY';
+
+EXPLAIN ANALYZE SELECT * FROM new_york_addresses
+WHERE street = '52 STREET';
+
+EXPLAIN ANALYZE SELECT * FROM new_york_addresses
+WHERE street = 'ZWICKY AVENUE';
+
+
+-- Adding Index 
+CREATE INDEX street_idx ON new_york_addresses (street);
+
+CREATE TABLE albums (
+    album_id bigint GENERATED ALWAYS AS IDENTITY,
+    catalog_code text,
+    title text,
+    artist text,
+    release_date date,
+    genre text,
+    description text,
+	CONSTRAINT primary_key PRIMARY KEY(album_id)
+);
+
+CREATE TABLE songs (
+    song_id bigint GENERATED ALWAYS AS IDENTITY,
+    title text,
+    composers text,
+    album_id bigint REFERENCES albums(album_id),
+	CONSTRAINT primary_key2 PRIMARY KEY(song_id)
+);
+
