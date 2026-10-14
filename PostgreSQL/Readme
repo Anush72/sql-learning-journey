@@ -90,3 +90,7 @@ g) Joining Table
       We cannot put the row in second table when we didnot insert the primary key in first table.
       We cannot delete the row in first table if we used primary key in second table.
       For deleting at same time we can use Cascade.
+    d) Check Contraints to check column based on condition like primary key, unique and so on.
+    e) Unique Constraints to make the row value in certain column unique.
+    f) Not Null Constraints to make the certain column should definitely put the value.
+    g) Indexing helps to query fast. We can write index function to make table query fast.
