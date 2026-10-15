@@ -94,3 +94,10 @@ g) Joining Table
     e) Unique Constraints to make the row value in certain column unique.
     f) Not Null Constraints to make the certain column should definitely put the value.
     g) Indexing helps to query fast. We can write index function to make table query fast.
+  j) Aggregate Function - using group by
+    We can use different aggreaget function like 
+    a) Count - Counting the rows
+    b) Min - Minimum Values in rows
+    c) Max - Maximum Values in rows
+    d) Sum - Sum of all rows
+    So, we can use this aggregate function using group by on different columns.
