@@ -101,3 +101,7 @@ g) Joining Table
     c) Max - Maximum Values in rows
     d) Sum - Sum of all rows
     So, we can use this aggregate function using group by on different columns.
+ h) Inspecting and Modifying the table
+    a) Look for Null Values
+    b) Look for Data Inconsistencies
+    c) Use Alter to add or Remove column
