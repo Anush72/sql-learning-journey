@@ -1271,3 +1271,94 @@ WHERE pls18.visits >= 0
        AND pls16.visits >= 0
 GROUP BY pls18.obereg
 ORDER BY chg_2018_17 DESC;
+
+-- CREATE Table
+CREATE TABLE meat_poultry_egg_establishments (
+  	establishment_number text CONSTRAINT est_number_key PRIMARY KEY,
+    company text,
+    street text,
+    city text,
+    st text,
+    zip text,
+    phone text,
+    grant_date date,
+    activities text,
+    dbas text
+);
+
+
+-- Copying the data
+COPY meat_poultry_egg_establishments
+FROM 'D:\sql-learning-journey\PostgreSQL\MPI_Directory_by_Establishment_Name.csv'
+WITH (FORMAT CSV,HEADER);
+
+
+-- Creting index on company column
+CREATE INDEX company_idx on meat_poultry_egg_establishments (company);
+
+
+SELECT COUNT(*) FROM meat_poultry_egg_establishments;
+
+
+-- Interviewing the dataset
+
+-- finidng the multiple companies at same address
+
+SELECT company,street,city,st,
+count(*) as address_count
+FROM meat_poultry_egg_establishments
+GROUP BY company,street,city,st
+HAVING COUNT(*) > 1
+ORDER BY company,street,city,st;
+
+
+-- Checking for missing values
+SELECT st,count(*) AS st_count
+FROM meat_poultry_egg_establishments
+GROUP BY st
+ORDER BY st;
+
+
+-- looking the details where st is null
+SELECT establishment_number,company,city,st,zip
+FROM meat_poultry_egg_establishments
+WHERE st IS NULL;
+
+-- Checking for Inconsistent Data Values
+SELECT company,count(*) AS company_count 
+FROM meat_poultry_egg_establishments
+GROUP BY company
+ORDER BY company ASC;
+
+-- Checking the Zip Code
+SELECT length(zip),
+count(*) as zip_length
+FROM meat_poultry_egg_establishments
+GROUP BY length(zip)
+ORDER BY length(zip) ASC;
+
+-- filtering out the state where zip is less tan 5
+SELECT st,count(*) as st_count
+FROM meat_poultry_egg_establishments
+WHERE length(zip) < 5
+GROUP BY st
+ORDER BY st ASC;
+
+
+-- Before Modifying the table -- create backup table
+CREATE TABLE meat_poultry_egg_establishments_backup as
+SELECT * FROM meat_poultry_egg_establishments;
+
+SELECT 
+(SELECT count(*) FROM meat_poultry_egg_establishments) AS original,
+    (SELECT count(*) FROM meat_poultry_egg_establishments_backup) AS backup;
+
+-- We know that some st column has missing values
+-- so update making the another copy of column st
+
+-- Adding column
+ALTER TABLE meat_poultry_egg_establishments ADD COLUMN st_copy text
+
+UPDATE meat_poultry_egg_establishments
+SET st_copy = st;
+
