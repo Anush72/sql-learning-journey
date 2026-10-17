@@ -105,3 +105,7 @@ g) Joining Table
     a) Look for Null Values
     b) Look for Data Inconsistencies
     c) Use Alter to add or Remove column
+    For any altering and modfying of table, backup table should be make
+    if we make mistake then we can copy from backup table.
+    So when ever we are working with cleaning data, backup table should be make initially.
+
