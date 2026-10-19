@@ -1385,3 +1385,100 @@ WHERE establishment_number = 'M263A+P263A+V263A'
 RETURNING establishment_number, company, city, st, zip;
 
 
+-- Updating the values for Consistency
+SELECT company
+FROM meat_poultry_egg_establishments
+WHERE company LIKE 'Armour%';
+
+
+-- Making the Copy of Company
+ALTER TABLE meat_poultry_egg_establishments ADD COLUMN company_standard text;
+
+UPDATE meat_poultry_egg_establishments
+SET company_standard = company;
+
+-- Updating the Value
+-- Returning tells which row has been updated
+UPDATE meat_poultry_egg_establishments
+SET company_standard = 'Armour-Eckrich Meats'
+WHERE company LIKE '%Armour%'
+RETURNING company, company_standard;
+
+
+-- Repairing Zip Code
+ALTER TABLE meat_poultry_egg_establishments ADD COLUMN zip_copy text;
+
+UPDATE meat_poultry_egg_establishments
+set zip_copy = zip;
+
+-- Updating the zip
+UPDATE meat_poultry_egg_establishments
+SET zip = '00' || zip
+WHERE st IN('PR','VI') AND length(zip) = 3;
+
+
+UPDATE meat_poultry_egg_establishments
+SET zip = '0' || zip
+WHERE st IN('CT','MA','ME','NH','NJ','RI','VT') AND length(zip) = 4;
+
+
+-- Creating Table state_regions
+
+CREATE TABLE state_regions (
+	st text CONSTRAINT st_key PRIMARY KEY,
+	region text NOT NULL
+);
+
+-- Copying the data from table
+COPY state_regions
+FROM 'D:\sql-learning-journey\PostgreSQL\state_regions.csv'
+WITH (FORMAT CSV, HEADER);
+
+
+-- Inspection data with the help of another table
+
+ALTER TABLE meat_poultry_egg_establishments
+ADD COLUMN inspection_deadline timestamp with time zone;
+
+UPDATE meat_poultry_egg_establishments establishments
+SET inspection_deadline = '2022-12-01 00:00 EST'
+WHERE EXISTS (select state_regions.region FROM
+state_regions
+WHERE establishments.st = state_regions.st
+AND state_regions.region = 'New England')
+RETURNING establishments.st,inspection_deadline;
+
+
+-- Using Transaction to Revert or Save Change
+
+START TRANSACTION;
+UPDATE meat_poultry_egg_establishments
+SET company = 'AGRO Merchantss Oakland LLC'
+WHERE company = 'AGRO Merchants Oakland, LLC'
+
+SELECT company
+FROM meat_poultry_egg_establishments
+WHERE company LIKE 'AGRO%'
+ORDER BY company;
+
+ROLLBACK;
+
+-- How many plant in table process meat and how many process poultry
+ALTER TABLE meat_poultry_egg_establishments ADD COLUMN meat_processing boolean;
+ALTER TABLE meat_poultry_egg_establishments ADD COLUMN poultry_processing boolean;
+
+UPDATE meat_poultry_egg_establishments 
+SET meat_processing = TRUE
+WHERE LOWER(activities) LIKE '%meat processing';
+
+UPDATE meat_poultry_egg_establishments 
+SET poultry_processing = TRUE
+WHERE LOWER(activities) LIKE '%poultry processing';
+
+
+SELECT count(meat_processing), count(poultry_processing)
+FROM meat_poultry_egg_establishments;
+
+
+
+
