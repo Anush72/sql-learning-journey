@@ -108,4 +108,6 @@ g) Joining Table
     For any altering and modfying of table, backup table should be make
     if we make mistake then we can copy from backup table.
     So when ever we are working with cleaning data, backup table should be make initially.
-
+    d) Deleting the Table Column With help of DROP.
+    e) Deleting the table with the help of DROP Table table_name;
+    f) Transactions and Rollup - to undone the actvities or going back if we do modify
