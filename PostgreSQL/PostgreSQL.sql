@@ -1479,6 +1479,33 @@ WHERE LOWER(activities) LIKE '%poultry processing';
 SELECT count(meat_processing), count(poultry_processing)
 FROM meat_poultry_egg_establishments;
 
+-- creating the census data
+CREATE TABLE acs_2014_2018_stats (
+	geoid text CONSTRAINT geo_id PRIMARY KEY,
+	county text NOT NULL,
+	st text NOT NULL,
+	pct_travel_60_min numeric(5,2),
+	pct_bachelors_higher numeric(5,2),
+	pct_masters_higher numeric(5,2),
+	median_hh_income integer,
+	CHECK (pct_masters_higher <= pct_bachelors_higher)
+
+);
+
+COPY acs_2014_2018_stats 
+FROM 'D:\sql-learning-journey\PostgreSQL\acs_2014_2018_stats.csv'
+WITH (FORMAT CSV, HEADER);
+
+SELECT * FROM acs_2014_2018_stats;
+
+-- Correlation
+-- Correlation between bachelor people and median high income
+SELECT corr(median_hh_income,pct_bachelors_higher) as bachelor_income_r
+FROM acs_2014_2018_stats;
 
 
-
+-- Checking Additional Correlation
+SELECT round(corr(median_hh_income,pct_bachelors_higher)::numeric,2) as bachelor_income_r,
+	   round(corr(median_hh_income,pct_travel_60_min)::numeric,2) as travel_income_r,
+	   round(corr(pct_travel_60_min,pct_bachelors_higher)::numeric,2) as bachelor_travel_r
+FROM acs_2014_2018_stats;
