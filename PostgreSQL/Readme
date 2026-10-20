@@ -111,3 +111,5 @@ g) Joining Table
     d) Deleting the Table Column With help of DROP.
     e) Deleting the table with the help of DROP Table table_name;
     f) Transactions and Rollup - to undone the actvities or going back if we do modify
+i) Statistics in SQL
+    a) Correlation - Tell the relation between the variables
