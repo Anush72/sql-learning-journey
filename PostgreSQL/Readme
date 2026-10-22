@@ -113,3 +113,5 @@ g) Joining Table
     f) Transactions and Rollup - to undone the actvities or going back if we do modify
 i) Statistics in SQL
     a) Correlation - Tell the relation between the variables
+    b) Linear Regression - Slope, Y-intercept and y-squared
+    c) Rank and Dense Rank Window Function
