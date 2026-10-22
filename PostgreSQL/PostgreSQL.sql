@@ -1509,3 +1509,48 @@ SELECT round(corr(median_hh_income,pct_bachelors_higher)::numeric,2) as bachelor
 	   round(corr(median_hh_income,pct_travel_60_min)::numeric,2) as travel_income_r,
 	   round(corr(pct_travel_60_min,pct_bachelors_higher)::numeric,2) as bachelor_travel_r
 FROM acs_2014_2018_stats;
+
+
+-- Predicting Values with Regression Analysis
+SELECT 
+	round(
+		regr_slope(median_hh_income,pct_bachelors_higher) ::numeric,2) as slope,
+	round(
+		regr_intercept(median_hh_income,pct_bachelors_higher) ::numeric,2) as y_intercept
+FROM 
+acs_2014_2018_stats;
+
+-- slope = 1016.55, y intercept = 29651
+
+-- variation in indepenedent variable can explain variation in dependent variable using r-squared
+SELECT 
+	round(
+		regr_r2(median_hh_income,pct_bachelors_higher) ::numeric,2) as slope
+FROM 
+acs_2014_2018_stats;
+	
+-- Ranks in SQL
+CREATE TABLE widget_companies (
+    id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    company text NOT NULL,
+    widget_output integer NOT NULL
+);
+
+INSERT INTO widget_companies (company, widget_output)
+VALUES
+    ('Dom Widgets', 125000),
+    ('Ariadne Widget Masters', 143000),
+    ('Saito Widget Co.', 201000),
+    ('Mal Inc.', 133000),
+    ('Dream Widget Inc.', 196000),
+    ('Miles Amalgamated', 620000),
+    ('Arthur Industries', 244000),
+    ('Fischer Worldwide', 201000);
+
+SELECT company, widget_output,
+	rank() over (ORDER BY widget_output DESC),
+	dense_rank() over (ORDER BY widget_output DESC)
+FROM widget_companies
+ORDER BY widget_output DESC;
+	
+
