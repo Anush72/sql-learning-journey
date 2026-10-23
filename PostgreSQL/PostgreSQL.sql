@@ -1547,10 +1547,37 @@ VALUES
     ('Arthur Industries', 244000),
     ('Fischer Worldwide', 201000);
 
+-- Ranking with Subgroups
 SELECT company, widget_output,
 	rank() over (ORDER BY widget_output DESC),
 	dense_rank() over (ORDER BY widget_output DESC)
 FROM widget_companies
 ORDER BY widget_output DESC;
 	
+CREATE TABLE store_sales (
+    store text NOT NULL,
+    category text NOT NULL,
+    unit_sales bigint NOT NULL,
+    CONSTRAINT store_category_key PRIMARY KEY (store, category)
+);
 
+INSERT INTO store_sales (store, category, unit_sales)
+VALUES
+    ('Broders', 'Cereal', 1104),
+    ('Wallace', 'Ice Cream', 1863),
+    ('Broders', 'Ice Cream', 2517),
+    ('Cramers', 'Ice Cream', 2112),
+    ('Broders', 'Beer', 641),
+    ('Cramers', 'Cereal', 1003),
+    ('Cramers', 'Beer', 640),
+    ('Wallace', 'Cereal', 980),
+    ('Wallace', 'Beer', 988);
+SELECT * FROM store_sales;
+
+SELECT *,
+rank() over(PARTITION BY category ORDER BY unit_sales DESC) 
+FROM store_sales;
+
+-- Correlation between pct_masters_high and median_hh_income
+SELECT corr(median_hh_income,pct_masters_higher) as master_income_r
+FROM acs_2014_2018_stats;
