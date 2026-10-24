@@ -1581,3 +1581,46 @@ FROM store_sales;
 -- Correlation between pct_masters_high and median_hh_income
 SELECT corr(median_hh_income,pct_masters_higher) as master_income_r
 FROM acs_2014_2018_stats;
+
+-- Creating table us_exports
+
+CREATE TABLE us_exports (
+	year smallint,
+	month smallint,
+	citrus_export_value bigint,
+	soybeans_export_value bigint
+);
+
+
+-- Importing data from CSV files
+COPY us_exports 
+FROM 'D:\sql-learning-journey\PostgreSQL\us_exports.csv'
+WITH (FORMAT CSV,HEADER)
+
+
+SELECT * FROM us_exports;
+
+
+-- Rolling Average 
+SELECT *,
+round(avg(citrus_export_value)
+OVER(ORDER BY year,month ROWS BETWEEN 11 PRECEDING AND CURRENT ROW),0) AS tweleve_month_avg
+FROM us_exports
+ORDER BY year,month;
+
+-- Rolling sum of soybean 
+SELECT *,
+round(avg(soybeans_export_value)
+OVER(ORDER BY year,month ROWS BETWEEN 11 PRECEDING AND CURRENT ROW),0) AS tweleve_month_sum
+FROM us_exports
+ORDER BY year,month;
+
+-- Looking at pls_fy2018_libraries data
+SELECT * 
+FROM pls_fy2018_libraries;
+
+-- Ranking the Library based on Visits
+SELECT libname,popu_lsa,
+rank() OVER(ORDER BY popu_lsa DESC) as rank_of_library
+FROM pls_fy2018_libraries
+WHERE visits > 250000;
