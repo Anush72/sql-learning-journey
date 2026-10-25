@@ -1,1 +1,30 @@
-🐘 PostgreSQL Learning Notes (Practical SQL)Welcome to my PostgreSQL practice repository! This guide summarizes key concepts, SQL syntax, and database techniques learned from Practical SQL.📊 Summary of Topics LearnedSectionTopicCore Concepts & HighlightsKey Syntax / Functions01. FundamentalsTables & Basic QueriesTable creation, row insertion, filtering, sorting, and pattern matching.SELECT, WHERE, ORDER BY, LIKE, ILIKE02. Data TypesText, Numeric, Date & JSON• Text: char(n) (fixed), varchar(n) (variable), text (unlimited)• Numeric: smallint, integer, bigint, serial, decimal• Date/Time: timestamp, date, time, interval• JSON vs JSONB: Key-value format vs. optimized binary storage• Type Casting: Converting data typesCAST(col AS type), col::type03. Data TransferImporting & ExportingLoading external CSV files into tables and exporting table data or selected sub-columns.COPY table FROM 'path' WITH (FORMAT CSV, DELIMITER ',')COPY table TO 'path' WITH (FORMAT CSV, DELIMITER ',')04. Math & StatsBasic Math & Summary StatsArithmetic operations following BODMAS, basic descriptive statistics, and percentile calculations.+, -, *, /, %, ^, |/, ||/avg(), mode(), percentile_cont()05. RelationshipsJoins & Table Relations• Join Types: Inner, Left, Right, Full Outer, Cross• Cardinality: One-to-One, One-to-Many, Many-to-ManyINNER JOIN, LEFT JOIN, RIGHT JOIN, FULL OUTER JOIN, CROSS JOIN06. Best PracticesNaming IdentifiersClean database conventions: snake_case, plural table names, descriptive aliases, avoiding cryptic abbreviations.e.g., country_name, australian_states07. Data IntegrityConstraints & Indexing• Primary Keys: Natural, Surrogate, Composite• Foreign Keys: Enforcing relations & cascading deletes• Rules: CHECK, UNIQUE, NOT NULL• Indexing: Query optimizationPRIMARY KEY, FOREIGN KEY ... ON DELETE CASCADE, CHECK(), UNIQUE, NOT NULL, CREATE INDEX08. AggregationsAggregates & GroupingGrouping rows to perform calculations across datasets.GROUP BY, COUNT(), MIN(), MAX(), SUM()09. MaintenanceTable Modification & Safety• Inspecting NULL values and inconsistencies• Altering or dropping structures• Safeguarding work via backup tables• Transaction managementALTER TABLE, DROP TABLE, BEGIN, COMMIT, ROLLBACK10. AnalyticsAdvanced Stats & WindowsAnalytical calculations and row ranking without collapsing datasets.Correlation, linear regression functions, RANK() OVER (), DENSE_RANK() OVER ()
+# 🐘 Practical SQL Learning Journey
+
+Welcome to my **Practical SQL** learning journey!
+
+---
+
+## 🎯 Goals
+
+- 🐘 **Master PostgreSQL & Relational Databases**
+- 📊 **Learn Data Analysis & Statistical Functions in SQL**
+- 🛠️ **Design Robust Schemas with Proper Constraints**
+- 🧹 **Inspect, Clean, and Modify Complex Datasets**
+- 📈 **Track My SQL Progress Every Day**
+
+---
+
+## 📅 Daily Progress
+
+| Day / Topic | Topic Learned | Key Concepts / Highlights |
+| :---: | :--- | :--- |
+| **Lesson 01** | Tables & Basic Queries | Table creation, row insertion, filtering with `WHERE`, sorting with `ORDER BY`, pattern matching using `LIKE` and `ILIKE` |
+| **Lesson 02** | Data Types & Type Casting | `char`, `varchar`, `text`, `integer`, `serial`, `decimal`, `timestamp`, `interval`, `json` vs `jsonb`, explicit casting using `CAST()` and `::` |
+| **Lesson 03** | Importing & Exporting Data | Importing CSV files into tables, copying specific sub-columns, and exporting database query results using `COPY` |
+| **Lesson 04** | Basic Math & Statistics | Arithmetic following BODMAS rules, descriptive statistics with `avg()`, `mode()`, and calculating percentiles/quartiles with `percentile_cont()` |
+| **Lesson 05** | Table Joins & Relationships | `INNER`, `LEFT`, `RIGHT`, `FULL OUTER`, and `CROSS` joins; understanding One-to-One, One-to-Many, and Many-to-Many relationships |
+| **Lesson 06** | Naming Guidelines | Identifier best practices: using `snake_case`, plural table names, clear non-cryptic names, and sensible backup table naming |
+| **Lesson 07** | Constraints & Indexing | Primary Keys (Natural, Surrogate, Composite), Foreign Keys with `CASCADE`, `CHECK`, `UNIQUE`, `NOT NULL`, and speed optimization using Indexes |
+| **Lesson 08** | Aggregate Functions | Grouping data with `GROUP BY` and aggregating with `COUNT()`, `MIN()`, `MAX()`, and `SUM()` |
+| **Lesson 09** | Inspecting & Modifying Tables | Checking for `NULL` values and inconsistencies, altering/dropping tables, safe backups, and using `BEGIN`, `COMMIT`, `ROLLBACK` transactions |
+| **Lesson 10** | Statistics & Window Functions | Correlation, linear regression calculations, and ranking rows using `RANK()` and `DENSE_RANK()` window functions |
