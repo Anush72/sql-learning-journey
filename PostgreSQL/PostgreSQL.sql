@@ -1624,3 +1624,48 @@ SELECT libname,popu_lsa,
 rank() OVER(ORDER BY popu_lsa DESC) as rank_of_library
 FROM pls_fy2018_libraries
 WHERE visits > 250000;
+
+-- Working with date and time format
+SELECT
+  date_part('year', '2022-12-01 18:37:12 EST'::timestamptz) AS year,
+  date_part('month', '2022-12-01 18:37:12 EST'::timestamptz) AS month,
+  date_part('day', '2022-12-02 18:37:12 EST'::timestamptz) AS day,
+  date_part('hour', '2022-12-01 18:37:12 EST'::timestamptz) AS hour,
+  date_part('minute', '2022-12-01 18:37:12 EST'::timestamptz) AS minute,
+  date_part('seconds', '2022-12-01 18:37:12 EST'::timestamptz) AS seconds,
+  date_part('timezone_hour', '2022-12-01 18:37:12 EST'::timestamptz) AS tz,
+  date_part('week', '2022-12-01 18:37:12 EST'::timestamptz) AS week,
+  date_part('quarter', '2022-12-01 18:37:12 EST'::timestamptz) AS quarter,
+  date_part('epoch', '2022-12-01 18:37:12 EST'::timestamptz) AS epoch;
+
+-- Creating Datetime values from timestamp components
+SELECT make_date(2026,10,25);
+SELECT make_time(9,15,0.0);
+SELECT make_timestamptz(2026,10,25,9,15,0.0,'Australia/Melbourne');
+
+-- current timestampz
+select current_timestamp;
+
+-- local timestamp
+SELECT localtimestamp;
+
+-- creating the time table
+CREATE TABLE current_time_example (
+	time_id integer GENERATED ALWAYS AS IDENTITY,
+	current_time_stamp_col timestamptz,
+	clock_timestamp_col timestamptz
+);
+
+-- Inserting values into table
+INSERT INTO current_time_example
+	(current_time_stamp_col,clock_timestamp_col)
+	(SELECT current_timestamp,clock_timestamp()
+	FROM generate_series(1,1000));
+SELECT * FROM current_time_example;
+
+-- Looking at timezone
+SHOW timezone;
+
+SELECT * FROM pg_timezone_names
+WHERE name LIKE 'Australia%'
+ORDER BY name;
