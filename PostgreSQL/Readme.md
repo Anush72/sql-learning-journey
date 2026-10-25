@@ -28,3 +28,4 @@ Welcome to my **Practical SQL** learning journey!
 | **Lesson 08** | Aggregate Functions | Grouping data with `GROUP BY` and aggregating with `COUNT()`, `MIN()`, `MAX()`, and `SUM()` |
 | **Lesson 09** | Inspecting & Modifying Tables | Checking for `NULL` values and inconsistencies, altering/dropping tables, safe backups, and using `BEGIN`, `COMMIT`, `ROLLBACK` transactions |
 | **Lesson 10** | Statistics & Window Functions | Correlation, linear regression calculations, and ranking rows using `RANK()` and `DENSE_RANK()` window functions |
+| **Lesson 11** | Date and Time | Timestamp, Local Zone |
