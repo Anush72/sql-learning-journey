@@ -1807,3 +1807,52 @@ ORDER BY time_period DESC;
 SELECT (date_part('epoch',tpep_dropoff_datetime):: numeric,2),
 tpep_dropoff_datetime
 FROM nyc_yellow_taxi_trips;
+
+-- Current Date
+SELECT CURRENT_DATE;
+
+-- Current Time
+SELECT CURRENT_TIME;
+
+
+-- Current Date and Time (TimeStamp)
+SELECT CURRENT_TIMESTAMP;
+
+-- Current Time minus one day
+SELECT CURRENT_TIMESTAMP - INTERVAL '1 day' ;
+
+-- Seven days back
+SELECT CURRENT_DATE - INTERVAL '7 day' ;
+
+-- 2 Month Back
+SELECT CURRENT_DATE- INTERVAL '2 Month' ;
+
+-- 30 days in future
+SELECT CURRENT_DATE +  30;
+
+-- When we use date and wanna add say we can simple add number 
+
+-- When we use timestamp and wanna add hour or day or month we use interval
+
+-- Extracting Year from Date
+
+SELECT EXTRACT(YEAR FROM CURRENT_DATE);
+
+-- Extracting Month from Date
+SELECT EXTRACT(Month FROM CURRENT_DATE);
+
+-- Extracting Day from Date
+SELECT EXTRACT(Day FROM CURRENT_DATE);
+
+-- Extracting Time from Timestamp
+SELECT Current_TIMESTAMP:: TIME;
+
+-- Format Pattern
+SELECT TO_CHAR(CURRENT_DATE,'YYYY-MM-DD');
+
+SELECT TO_CHAR(CURRENT_DATE,'dd-mon-yyyy');
+
+SELECT TO_CHAR(CURRENT_DATE,'dd-month-yyyy');
+
+-- Getting Quarter from Date
+SELECT EXTRACT(Quarter FROM CURRENT_DATE);
