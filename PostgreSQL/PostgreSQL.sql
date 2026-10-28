@@ -1856,3 +1856,57 @@ SELECT TO_CHAR(CURRENT_DATE,'dd-month-yyyy');
 
 -- Getting Quarter from Date
 SELECT EXTRACT(Quarter FROM CURRENT_DATE);
+
+
+SELECT * 
+FROM nyc_yellow_taxi_trips;
+
+
+-- Extracting Year from NYC taxi trip
+SELECT DISTINCT EXTRACT(YEAR FROM tpep_pickup_datetime) as year_taxi
+FROM nyc_yellow_taxi_trips;
+
+-- SO there is only one year that is 2016 and month is 6 june
+
+SELECT DISTINCT EXTRACT(Month FROM tpep_pickup_datetime) as Month_of_the_Trip
+FROM nyc_yellow_taxi_trips;
+
+-- Lets see day and day is 1 and 2
+SELECT DISTINCT EXTRACT(Day FROM tpep_pickup_datetime) as Day_of_the_Trip
+FROM nyc_yellow_taxi_trips;
+
+
+-- Lets see how many trips done in two day
+SELECT COUNT(tpep_pickup_datetime) as total_trips
+FROM nyc_yellow_taxi_trips;
+
+-- LETS See which two day has highest trip
+SELECT DISTINCT EXTRACT(Day FROM tpep_pickup_datetime) AS Day_of_the_Trip,
+COUNT(*)
+FROM nyc_yellow_taxi_trips
+GROUP BY Day_of_the_Trip;
+
+-- Lets See which hour has the most trip
+SELECT DISTINCT EXTRACT (HOUR FROM tpep_pickup_datetime) AS Hour_of_the_Time,
+COUNT(*) AS Total_Trip
+FROM nyc_yellow_taxi_trips
+GROUP BY Hour_of_the_Time
+ORDER BY Total_Trip DESC;
+
+-- In which day of which hour the most trip happen
+SELECT DISTINCT EXTRACT (HOUR FROM tpep_pickup_datetime) AS Hour_of_the_Time,
+COUNT(*) AS Total_Trip,
+RANK()OVER(ORDER BY count(*) DESC)
+FROM nyc_yellow_taxi_trips
+GROUP BY Hour_of_the_Time
+ORDER BY Total_Trip DESC;
+
+--In each day which hour the most trip happen
+SELECT DISTINCT EXTRACT (HOUR FROM tpep_pickup_datetime) AS Hour_of_the_Time,
+EXTRACT(Day FROM tpep_pickup_datetime) AS Day_of_the_Trip,
+RANK()OVER(PARTITION BY EXTRACT(Day FROM tpep_pickup_datetime) ORDER BY COUNT(*) ASC) AS order_rank,
+COUNT(*) AS Total_Trip
+FROM nyc_yellow_taxi_trips
+GROUP BY Hour_of_the_Time, Day_of_the_Trip
+ORDER BY day_of_the_trip, order_rank ;
+
