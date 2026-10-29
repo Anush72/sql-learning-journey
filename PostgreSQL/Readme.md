@@ -29,3 +29,4 @@ Welcome to my **Practical SQL** learning journey!
 | **Lesson 09** | Inspecting & Modifying Tables | Checking for `NULL` values and inconsistencies, altering/dropping tables, safe backups, and using `BEGIN`, `COMMIT`, `ROLLBACK` transactions |
 | **Lesson 10** | Statistics & Window Functions | Correlation, linear regression calculations, and ranking rows using `RANK()` and `DENSE_RANK()` window functions |
 | **Lesson 11** | Date and Time | Timestamp, Local Zone, Extracting Day, Month, Time|
+| **Lesson 12** | Advanced Query Techniques | Subquery, Using Where Clause, Derived Tables, Joining Tables, Making Columns|
