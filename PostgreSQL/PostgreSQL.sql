@@ -1910,3 +1910,41 @@ FROM nyc_yellow_taxi_trips
 GROUP BY Hour_of_the_Time, Day_of_the_Trip
 ORDER BY day_of_the_trip, order_rank ;
 
+-- Sub Query - Query Nested Inside another query
+-- Filtering the data using SUbqueries with Where Clause
+
+SELECT county_name,
+state_name,
+pop_est_2019
+FROM us_counties_pop_est_2019
+WHERE pop_est_2019 >= (
+	SELECT percentile_cont(.9) WITHIN GROUP (ORDER BY pop_est_2019)
+	FROM us_counties_pop_est_2019
+)
+ORDER BY pop_est_2019 DESC;
+
+
+-- Creating Derived Table with Subqueries
+SELECT round(calcs.average) AS average,
+calcs.median,
+round(calcs.average - calcs.median,0) AS median_average_diff
+FROM
+(SELECT avg(pop_est_2019) AS average,
+percentile_cont(.5)
+WITHIN GROUP (ORDER BY pop_est_2019) :: numeric AS median
+FROM us_counties_pop_est_2019
+)AS calcs
+;
+
+-- Generating Columns with Subquries
+SELECT county_name,
+state_name AS st,
+pop_est_2019,
+(SELECT
+percentile_cont(.5)
+WITHIN GROUP (ORDER BY pop_est_2019)
+FROM
+us_counties_pop_est_2019) AS us_median
+FROM us_counties_pop_est_2019;
+
+ 
