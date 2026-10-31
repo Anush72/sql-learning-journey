@@ -1947,4 +1947,92 @@ FROM
 us_counties_pop_est_2019) AS us_median
 FROM us_counties_pop_est_2019;
 
- 
+-- Understanding Subquery 
+CREATE TABLE retirees (
+    id int,
+    first_name text,
+    last_name text
+);
+
+INSERT INTO retirees
+VALUES (2, 'Janet', 'King'),
+       (4, 'Michael', 'Taylor');
+
+
+-- Generated values for the in operator
+SELECT first_name, last_name
+FROM employees
+WHERE emp_id in
+(SELECT id
+FROM retirees
+ORDER BY emp_id);
+
+-- Using Exists
+SELECT first_name, last_name
+FROM employees
+WHERE EXISTS
+(SELECT id
+FROM retirees
+WHERE id = employees.emp_id);
+
+-- Using NOT Exits
+
+SELECT first_name, last_name
+FROM employees
+WHERE NOT  EXISTS
+(SELECT id
+FROM retirees
+WHERE id = employees.emp_id);
+
+-- Using Lateral -- take the table from previous table in subquery
+SELECT county_name,
+state_name,
+pop_est_2019,
+raw_chg
+FROM 
+us_counties_pop_est_2019,
+	LATERAL(SELECT pop_est_2019 - pop_est_2018 AS raw_chg) rc;
+
+-- Using LATERAL with JOIN
+ALTER TABLE teachers ADD CONSTRAINT id_key PRIMARY KEY (id);
+
+CREATE TABLE teachers_lab_access (
+    access_id bigint PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    access_time timestamp with time zone,
+    lab_name text,
+    teacher_id bigint REFERENCES teachers (id)
+);
+
+INSERT INTO teachers_lab_access (access_time, lab_name, teacher_id)
+VALUES ('2022-11-30 08:59:00-05', 'Science A', 2),
+       ('2022-12-01 08:58:00-05', 'Chemistry B', 2),
+       ('2022-12-21 09:01:00-05', 'Chemistry A', 2),
+       ('2022-12-02 11:01:00-05', 'Science B', 6),
+       ('2022-12-07 10:02:00-05', 'Science A', 6),
+       ('2022-12-17 16:00:00-05', 'Science B', 6);
+
+
+SELECT t.first_name, t.last_name,a.access_time,a.lab_name
+FROM teachers t
+LEFT JOIN LATERAL (SELECT * 
+FROM teachers_lab_access
+WHERE teacher_id = t.id
+ORDER BY access_time DESC
+LIMIT 2) a
+ON true
+ORDER BY t.id;
+
+-- Using Common Table Expressions
+WITH large_counties (county_name,state_name,pop_est_2019)
+AS (
+SELECT county_name,state_name,pop_est_2019
+FROM us_counties_pop_est_2019
+WHERE pop_est_2019 >= 100000
+)
+SELECT state_name,count(*)
+FROM large_counties
+GROUP BY state_name
+ORDER BY count(*) DESC;
+
+-- CROSS Tabulation
+CREATE EXTENSION tablefunc;
