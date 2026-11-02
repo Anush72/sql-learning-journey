@@ -30,3 +30,4 @@ Welcome to my **Practical SQL** learning journey!
 | **Lesson 10** | Statistics & Window Functions | Correlation, linear regression calculations, and ranking rows using `RANK()` and `DENSE_RANK()` window functions |
 | **Lesson 11** | Date and Time | Timestamp, Local Zone, Extracting Day, Month, Time|
 | **Lesson 12** | Advanced Query Techniques | Subquery, Using Where Clause, Derived Tables, Joining Tables, Making Columns, Sub Query with IN, Exit and Not Exit, Common Table Expression,CrossTab, Case Statememt |
+| **Lesson 13** | Mining Text to Find a Meaningful Pattern | trim, ltrim, rtrim, upper, lower, initcap, left, right, char_length, position, regular expression |
