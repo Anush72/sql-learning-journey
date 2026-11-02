@@ -2151,3 +2151,45 @@ SELECT station_name,max_temperature_group,count(*)
 FROM temps_collapsed
 GROUP BY station_name,max_temperature_group
 ORDER BY station_name,count(*) DESC;
+
+-- Mining Text to find meaningful data
+
+-- Case Formating 
+-- Converting string into uppercases and lowercases
+SELECT upper('hello');
+SELECT lower('Randy');
+
+-- Convert the first letter of each word
+SELECT initcap('at the end of the day');
+
+-- Tells about the number of character in string
+SELECT char_length('Hello');
+
+-- Tells in which number the character is in string
+SELECT position('e' in 'Hello');
+
+-- Trim -- removing the space from first and last
+SELECT trim(' Pat hello ');
+
+-- Extracting the character based on which side and how many words
+SELECT left('Melbourne',3);
+SELECT right('Melbourne',3);
+
+
+-- Regular Expression to filter like LIKE and ILIKE
+-- ~ case sensitive and ~* case insensitive
+SELECT county_name
+FROM us_counties_pop_est_2019
+WHERE county_name ~'(lade|lare)'
+ORDER BY county_name;
+
+-- Regular Expression Functions to Replace or Split Text
+SELECT regexp_replace('5/12/2024','\d{2}','01');
+
+SELECT regexp_split_to_table('Four,Score,and,Seven,Years,ago',',');
+
+--Splitting the value into table
+SELECT regexp_split_to_table('Four Score and Seven Years ago',' ');
+
+-- Making array
+SELECT regexp_split_to_array('Phil Mike Tony Steve',' ')
