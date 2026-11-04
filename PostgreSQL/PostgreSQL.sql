@@ -2193,3 +2193,28 @@ SELECT regexp_split_to_table('Four Score and Seven Years ago',' ');
 
 -- Making array
 SELECT regexp_split_to_array('Phil Mike Tony Steve',' ')
+
+-- Making Table Crime Reports
+CREATE TABLE crime_reports(
+	crime_id integer PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+	case_number text,
+	date_1 timestamptz,
+	date_2 timestamptz,
+	street text,
+	city text,
+	crime_type text, 
+	description text,
+	original_text text NOT NULL
+	);
+COPY crime_reports (original_text)
+FROM 'D:\sql-learning-journey\PostgreSQL\crime_reports.csv'
+WITH (FORMAT CSV, HEADER OFF, QUOTE '"');
+
+
+SELECT * 
+FROM crime_reports;
+
+SELECT crime_id, 
+regexp_match(original_text,'\d{1,2}\/\d{1,2}\/\d{2}')
+FROM crime_reports
+ORDER BY crime_id;
