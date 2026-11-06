@@ -36,7 +36,59 @@ FROM sales;
 SELECT customer_name,product,unit_price
 FROM sales;
 
--- Products with a unit price greater than 10
+-- Products with a unit price greater than 100
 SELECT product 
 FROM sales 
 WHERE unit_price > 100;
+
+-- Product sorted by unit_price
+SELECT product,unit_price
+FROM sales
+ORDER BY unit_price DESC;
+
+-- Order has been cancelled
+SELECT * 
+FROM sales
+WHERE status = 'Cancelled';
+
+-- Product containing the letter o
+SELECT * 
+FROM sales
+WHERE lower(product) LIKE '%o%'
+
+-- Discount greater than 10 Percent
+-- Product containing the letter o
+SELECT * 
+FROM sales
+WHERE discount > 0.10;
+
+
+-- Sales from central
+SELECT * 
+FROM 
+sales
+WHERE lower(region) = 'central';
+
+-- Orders where the unit_price is between 100 and 500
+SELECT * 
+FROM 
+sales 
+WHERE unit_price > 100 and unit_price < 500;
+
+-- customer name containing the letter a
+SELECT * 
+FROM 
+sales 
+WHERE lower(customer_name)  ~'a';
+
+
+-- Orders either pending or cancelled
+SELECT * 
+FROM sales
+WHERE status = 'Cancelled' or status = 'Pending';
+
+-- Top five most expensive products
+SELECT * 
+FROM sales
+ORDER BY unit_price DESC
+LIMIT 5;	
