@@ -2218,3 +2218,43 @@ SELECT crime_id,
 regexp_match(original_text,'\d{1,2}\/\d{1,2}\/\d{2}')
 FROM crime_reports
 ORDER BY crime_id;
+
+-- Working with JSON 
+CREATE TABLE films (
+	id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	film jsonb NOT NULL
+);
+
+COPY films (film)
+FROM 'D:\sql-learning-journey\PostgreSQL\films.json';
+
+CREATE INDEX idx_film ON films USING GIN(film);
+
+
+-- Extracting the key from JSON
+SELECT id, film -> 'title' as title
+FROM films
+ORDER BY id;
+
+-- Extracting the key values from JSON
+SELECT id, film ->> 'title' as title
+FROM films
+ORDER BY id;
+
+-- Extracting the values from JSON
+SELECT id, film -> 'genre' as genre
+FROM films
+ORDER BY id;
+
+-- Array Element Extraction
+SELECT id, film -> 'genre' -> 0 as genre
+FROM films
+ORDER BY id;
+
+SELECT id, film -> 'genre' -> 1 as genre
+FROM films
+ORDER BY id;
+
+SELECT id, film -> 'genre' -> -1 as genre
+FROM films
+ORDER BY id;
