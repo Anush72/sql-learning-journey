@@ -31,4 +31,4 @@ Welcome to my **Practical SQL** learning journey!
 | **Lesson 11** | Date and Time | Timestamp, Local Zone, Extracting Day, Month, Time|
 | **Lesson 12** | Advanced Query Techniques | Subquery, Using Where Clause, Derived Tables, Joining Tables, Making Columns, Sub Query with IN, Exit and Not Exit, Common Table Expression,CrossTab, Case Statememt |
 | **Lesson 13** | Mining Text to Find a Meaningful Pattern | trim, ltrim, rtrim, upper, lower, initcap, left, right, char_length, position, regular expression, ts vector and tsquery to convert into lexes form |
-|| **Lesson 14** | Working With JSON | JSON, JSON B, contain keys and values, extracting keys, values and array|
+|| **Lesson 14** | Working With JSON | JSON, JSON B, contain keys and values, extracting keys, values and array, Containment and Existence|
