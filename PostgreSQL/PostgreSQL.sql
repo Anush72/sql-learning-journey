@@ -2230,6 +2230,8 @@ FROM 'D:\sql-learning-journey\PostgreSQL\films.json';
 
 CREATE INDEX idx_film ON films USING GIN(film);
 
+SELECT * 
+FROM films;
 
 -- Extracting the key from JSON
 SELECT id, film -> 'title' as title
@@ -2258,3 +2260,28 @@ ORDER BY id;
 SELECT id, film -> 'genre' -> -1 as genre
 FROM films
 ORDER BY id;
+
+-- Path Extraction
+SELECT id, film #> '{rating,MPAA}' as mpaa_rating
+FROM films
+ORDER BY id;
+
+SELECT id, film #> '{characters,1}' as name
+FROM films
+ORDER BY id;
+
+-- Containment and Existence
+SELECT id, film ->> 'title' as title,
+film @> '{"title":"The Incredibles"}' ::jsonb AS is_incredible
+FROM films
+ORDER BY id;
+
+SELECT film ->> 'title' as title,
+film ->> 'year' as Year
+FROM films
+WHERE film @> '{"title":"The Incredibles"}' ::jsonb;
+
+-- Existence operators
+SELECT film ->> 'title' AS title
+FROM films
+WHERE film ? 'rating';
