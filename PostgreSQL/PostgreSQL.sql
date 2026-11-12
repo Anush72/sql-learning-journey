@@ -2285,3 +2285,57 @@ WHERE film @> '{"title":"The Incredibles"}' ::jsonb;
 SELECT film ->> 'title' AS title
 FROM films
 WHERE film ? 'rating';
+
+-- CREATING Earthquakes table
+CREATE TABLE earthquakes (
+	id integer GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+	earthquake jsonb NOT NULL
+);
+
+CREATE INDEX idx_earthquakes ON earthquakes USING GIN(earthquake);
+
+COPY earthquakes (earthquake)
+FROM 'D:\sql-learning-journey\PostgreSQL\earthquakes.json';
+
+-- Working with Earthquake Times
+SELECT id, earthquake #> '{properties,time}' as time
+FROM earthquakes
+ORDER BY id LIMIT 5;
+
+-- Converting time into timestamp
+SELECT id, earthquake #> '{properties,time}' as time,
+to_timestamp((earthquake #> '{properties,time}')::bigint / 1000) as time_formatted
+FROM earthquakes
+ORDER BY id LIMIT 5;
+
+
+-- Finding Oldest and Newest Earthquake
+SELECT
+min(to_timestamp(
+(earthquake #> '{properties,time}')::bigint / 1000)) AT TIME ZONE 'UTC' as min_timestamp,
+max(to_timestamp(
+(earthquake #> '{properties,time}')::bigint / 1000)) AT TIME ZONE 'UTC' as max_timestamp
+FROM earthquakes;
+
+
+-- Finding the Largest and Most-Reported Earthquakes
+SELECT earthquake #>> '{properties,place}' as place,
+to_timestamp((earthquake #>> '{properties,time}')::bigint / 1000) AT TIME ZONE 'UTC' as time,
+(earthquake #>> '{properties,mag}')::numeric AS magnitude
+FROM earthquakes
+ORDER BY (earthquake #>> '{properties,mag}') :: numeric DESC NULLS LAST
+LIMIT 5;
+
+-- Extracting by Citizen Reports
+SELECT earthquake #>> '{properties,place}' as place,
+to_timestamp((earthquake #>> '{properties,time}')::bigint / 1000) AT TIME ZONE 'UTC' as time,
+(earthquake #>> '{properties,mag}')::numeric AS magnitude,
+(earthquake #>> '{properties,felt}')::integer AS felt
+FROM earthquakes
+ORDER BY (earthquake #>> '{properties,felt}')::integer DESC NULLS LAST
+LIMIT 5;
+
+
+-- Turning Query Results into JSON
+SELECT to_json(employees) AS json_rows
+FROM employees;
