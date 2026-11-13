@@ -2339,3 +2339,30 @@ LIMIT 5;
 -- Turning Query Results into JSON
 SELECT to_json(employees) AS json_rows
 FROM employees;
+
+
+-- Finding the Length of an Array
+SELECT id,
+film ->> 'title' AS title,
+jsonb_array_length(film -> 'characters') as num_characters
+FROM films
+ORDER BY id;
+
+
+-- Looking at tsunami
+SELECT earthquake #>> '{properties,tsunami}' as tsunami
+FROM earthquakes
+WHERE earthquake #>> '{properties,tsunami}' = '1'  ;
+
+
+-- Creating table earthquakes from json
+CREATE TABLE earthquakes_from_json (
+	id text PRIMARY KEY,
+	title text,
+	type text,
+	quake_date timestamp with time zone,
+	mag numeric,
+	place text,
+	earthquake_point geography(POINT,4326),
+	url text
+);
