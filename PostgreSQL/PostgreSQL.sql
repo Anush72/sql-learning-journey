@@ -2366,3 +2366,46 @@ CREATE TABLE earthquakes_from_json (
 	earthquake_point geography(POINT,4326),
 	url text
 );
+
+
+SELECT * FROM 
+earthquakes_from_json;
+
+
+SELECT *
+FROM earthquakes;
+
+SELECT ST_SetSRID(ST_GeomFromGeoJSON(earthquake -> 'geometry'), 4326)
+from earthquakes;
+-- Inserting the JSON value of Earthquake 
+INSERT INTO earthquakes_from_json(id, title, type, quake_date, mag, place, earthquake_point, url)
+SELECT id,
+  earthquake ->> 'id',
+  earthquake ->> 'type',
+  to_timestamp((earthquake #>> '{properties,time}')::bigint / 1000) AT TIME ZONE 'UTC',
+  (earthquake #>> '{properties,mag}')::numeric,
+  earthquake #>> '{properties,place}',
+  ST_Force2D(ST_SetSRID(ST_GeomFromGeoJSON(earthquake -> 'geometry'), 4326)),
+  earthquake #>> '{properties,url}'
+FROM earthquakes;   
+
+SELECT * FROM 
+earthquakes_from_json;
+
+
+SELECT * 
+FROM teachers;
+
+
+SELECT to_json(teachers_lab_access) as teacher_lab_acess
+FROM teachers_lab_access;
+
+
+-- JOINING TWO TABLE teachers and teacher lab access
+SELECT to_json(teacher_lab) as json_format
+FROM
+(SELECT * FROM 
+teachers t
+LEFT JOIN teachers_lab_access l
+on t.id = l.access_id) as teacher_lab
+;
