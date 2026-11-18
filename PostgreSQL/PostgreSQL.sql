@@ -2446,3 +2446,76 @@ SELECT county_name,
 	WHERE state_name = 'Nevada'
 	ORDER BY county_fips
 	LIMIT 5;
+
+
+DROP VIEW nevada_counties_pop_2019;
+
+
+-- Creating the Materalized View
+CREATE MATERIALIZED VIEW nevada_counties_pop_2019 AS
+	SELECT county_name,
+	state_fips,county_fips,
+	pop_est_2019
+	FROM us_counties_pop_est_2019
+	WHERE state_name = 'Nevada';
+
+
+-- Inserting, Updating and Deleting Data Using View
+SELECT * 
+FROM employees;
+
+-- Creating view from employees
+CREATE OR REPLACE VIEW employees_tax_dept WITH (security_barrier) AS
+SELECT emp_id,
+first_name,
+last_name,
+dept_id
+FROM employees
+WHERE dept_id = 1
+WITH LOCAL CHECK OPTION;
+
+
+SELECT * 
+FROM employees_tax_dept;
+
+
+-- Inserting rows into employees_tax_dept
+INSERT INTO employees_tax_dept (emp_id,first_name,last_name,dept_id)
+VALUES (5,'Suzanne','Legree',1);
+
+INSERT INTO employees_tax_dept (emp_id,first_name,last_name,dept_id)
+VALUES (6,'Jamil','White',2);
+
+SELECT * FROM employees_tax_dept ORDER BY emp_id;
+
+SELECT * FROM employees;
+
+
+-- Updating the employees_tax_dept
+UPDATE employees_tax_dept
+SET last_name = 'Le Gere'
+WHERE emp_id = 5;
+
+
+-- Deleting Rows Using the View
+DELETE FROM employees_tax_dept
+WHERE emp_id = 5;
+
+
+-- Creating Function for repetive task
+DROP FUNCTION percent_change;
+CREATE OR REPLACE FUNCTION
+percent_change(new_value numeric,
+old_value numeric,
+decimal_places integer DEFAULT 1)
+RETURNS numeric AS
+'SELECT ROUND(
+((new_value-old_value)/old_value)*100,decimal_places);'
+LANGUAGE SQL
+IMMUTABLE
+RETURNS NULL ON NULL INPUT;
+
+
+-- Using percent_change function
+SELECT percent_change(110,108,2);
+
