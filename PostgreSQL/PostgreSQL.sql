@@ -2519,3 +2519,36 @@ RETURNS NULL ON NULL INPUT;
 -- Using percent_change function
 SELECT percent_change(110,108,2);
 
+
+-- Using Procedures
+ALTER TABLE teachers ADD COLUMN personal_days integer;
+
+SELECT first_name,
+last_name,
+hire_date,
+personal_days
+FROM teachers;
+
+
+-- Creating Procedure
+CREATE OR REPLACE PROCEDURE update_personal_days()
+AS $$
+BEGIN 
+	UPDATE teachers
+	SET personal_days = 
+		CASE WHEN (now() - hire_date) >= '10 years':: interval
+			AND (now() - hire_date) < '15 years' ::interval THEN 4
+			WHEN (now() - hire_date) >= '15 years':: interval
+			AND (now() - hire_date) < '20 years'::interval THEN 5
+			WHEN (now() - hire_date) >= '20 years':: interval
+			AND (now() - hire_date) < '25 years'::interval THEN 6
+			WHEN (now() - hire_date) >= '25 years':: interval THEN 7
+			ELSE 3
+		END;
+	RAISE NOTICE 'personal_days updated!';
+END;
+$$
+LANGUAGE plpgsql;
+
+
+CALL update_personal_days();
