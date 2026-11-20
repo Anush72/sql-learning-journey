@@ -32,4 +32,4 @@ Welcome to my **Practical SQL** learning journey!
 | **Lesson 12** | Advanced Query Techniques | Subquery, Using Where Clause, Derived Tables, Joining Tables, Making Columns, Sub Query with IN, Exit and Not Exit, Common Table Expression,CrossTab, Case Statememt |
 | **Lesson 13** | Mining Text to Find a Meaningful Pattern | trim, ltrim, rtrim, upper, lower, initcap, left, right, char_length, position, regular expression, ts vector and tsquery to convert into lexes form |
 | **Lesson 14** | Working With JSON | JSON, JSON B, contain keys and values, extracting keys, values and array, Containment and Existence|
-| **Lesson 15** |View, Function and Triggers | View from Query of Table, Standard View and Materialized View, Function|
+| **Lesson 15** |View, Function and Triggers | View from Query of Table, Standard View and Materialized View, Function, Stored Procedure|
